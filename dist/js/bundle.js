@@ -191,21 +191,21 @@ const modal = () => {
     let {
       selectorModal,
       time,
-      selectorShow
+      styleShow
     } = _ref2;
     setTimeout(function () {
-      document.querySelector(selectorModal).classList.add(selectorShow);
+      document.querySelector(selectorModal).style.display = `${styleShow}`;
     }, time);
   } //-------------------2. Вызовы функций---------------------------------------//
   // 
   // 2.1. Вызов открытия конкретного окна через время
-  // timerShowModal({
-  //     selectorModal: ".popup_engineer",
-  //     time: 3000,
-  //     selectorShow: 'show'
-  // });
-  // 2.2. Выбрать замерщика
 
+
+  timerShowModal({
+    selectorModal: ".popup-design",
+    time: 2000,
+    styleShow: 'block'
+  }); // 2.2. Выбрать замерщика
 
   actionModal({
     /* кнопка, открываюая мод. окно */
