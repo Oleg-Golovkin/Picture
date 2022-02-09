@@ -153,11 +153,11 @@ gulp.task('image', function () {
 // а загоняем их сюда.
 gulp.task('webpack', function () {
     return gulp
-        .src('./src/js/script.js')
+        .src('./src/js/main.js')
         .pipe(
             webpack({
                 mode: 'development',
-                entry: '/src/js/script.js',
+                entry: '/src/js/main.js',
                 output: {
                     path: path.resolve(__dirname, dist),
                     filename: 'js/bundle.js',
