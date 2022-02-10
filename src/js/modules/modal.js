@@ -1,7 +1,7 @@
 // import windowOptions from "./windowOptions";
 
 const modal = () => {
-
+    let noOpoenWinowTimer = true;
     // Верстка такова, что скрываем и показываем
     // фон модального окна (его подложку)    
     //-------------------1. Функции---------------------------------------//
@@ -25,9 +25,7 @@ const modal = () => {
         styleShow,
         dataModals = true,
         dataValidation = false,
-
-
-    }) {
+s    }) {
 
         const button = document.querySelectorAll(selectorButton),
             modal = document.querySelector(selectorModal),
@@ -64,7 +62,9 @@ const modal = () => {
             modal.style.display = `${styleShow}`;
             // Окно прокручивается
             document.body.style.overflow = "hidden";
-            document.body.style.marginRight = `${showWidthScroll()}px`;
+            document.body.style.marginRight = `${showWidthScroll()}px`;    
+            noOpoenWinowTimer = false;
+
         }
 
         // Валидация на заполненность форм отдельных модальных
@@ -149,6 +149,7 @@ const modal = () => {
                 if (e.target && !dataValidation) {
                     // Все окна закрываются
                     showModal();
+                    console.log(noOpoenWinowTimer);
                 }
             });
         });
@@ -183,31 +184,29 @@ const modal = () => {
     }
 
     //1.2.Через время открываются не все, а конкретное окно
+
     function timerShowModal({
         selectorModal,
         time,
-        styleShow
+        styleShow,        
     }) {
         setTimeout(function () {
-            document.querySelector(selectorModal).style.display = `${styleShow}`
+            console.log(noOpoenWinowTimer);
+            if (noOpoenWinowTimer) {
+                document.querySelector(selectorModal).style.display = `${styleShow}`;
+                console.log(noOpoenWinowTimer);
+                console.log('1');
+            }
         }, time);
-
-
     }
 
 
 
 
     //-------------------2. Вызовы функций---------------------------------------//
-    // 
-    // 2.1. Вызов открытия конкретного окна через время
-    timerShowModal({
-        selectorModal: ".popup-design",
-        time: 2000,
-        styleShow: 'block'
-    });
 
-    // 2.2. Выбрать замерщика
+
+    // 2.1. Заказать дизайн
     actionModal({
         /* кнопка, открываюая мод. окно */
         selectorButton: ".button-design",
@@ -216,6 +215,24 @@ const modal = () => {
         /* кнопка, закрывающая модальное окно */
         selectorClose: '.popup-close',
         /* класс (без точки), присваивающий display: block; */
+        styleShow: 'block',
+    });
+    // 2.2. Подобнее об услуге
+    actionModal({
+        /* кнопка, открываюая мод. окно */
+        selectorButton: ".button-consultation",
+        /* Подложка (фон) модального окна */
+        selectorModal: '.popup-consultation',
+        /* кнопка, закрывающая модальное окно */
+        selectorClose: '.popup-close',
+        /* класс (без точки), присваивающий display: block; */
+        styleShow: 'block',
+    });
+
+    
+    timerShowModal({
+        selectorModal: ".popup-consultation",
+        time: 2000,
         styleShow: 'block'
     });
 
