@@ -1,7 +1,7 @@
 // import windowOptions from "./windowOptions";
 
 const modal = () => {
-    let noOpoenWinowTimer = true;
+    let noOpoenWindowTimer = true;
     // Верстка такова, что скрываем и показываем
     // фон модального окна (его подложку)    
     //-------------------1. Функции---------------------------------------//
@@ -25,7 +25,7 @@ const modal = () => {
         styleShow,
         dataModals = true,
         dataValidation = false,
-s    }) {
+    }) {
 
         const button = document.querySelectorAll(selectorButton),
             modal = document.querySelector(selectorModal),
@@ -62,8 +62,8 @@ s    }) {
             modal.style.display = `${styleShow}`;
             // Окно прокручивается
             document.body.style.overflow = "hidden";
-            document.body.style.marginRight = `${showWidthScroll()}px`;    
-            noOpoenWinowTimer = false;
+            document.body.style.marginRight = `${showWidthScroll()}px`;
+            noOpoenWindowTimer = false;
 
         }
 
@@ -149,7 +149,6 @@ s    }) {
                 if (e.target && !dataValidation) {
                     // Все окна закрываются
                     showModal();
-                    console.log(noOpoenWinowTimer);
                 }
             });
         });
@@ -176,11 +175,12 @@ s    }) {
 
         // Закрытие окна на клавишу 
         document.addEventListener('keydown', (e) => {
-            if (e.code === "Escape" && modal.classList.contains(selectorShow)) {
+            if (e.code === "Escape" && window.getComputedStyle(modal).display == "block") {
                 closeModal();
                 document.body.style.overflow = "";
             }
         });
+
     }
 
     //1.2.Через время открываются не все, а конкретное окно
@@ -188,13 +188,12 @@ s    }) {
     function timerShowModal({
         selectorModal,
         time,
-        styleShow,        
+        styleShow,
     }) {
         setTimeout(function () {
-            console.log(noOpoenWinowTimer);
-            if (noOpoenWinowTimer) {
+            if (noOpoenWindowTimer) {
                 document.querySelector(selectorModal).style.display = `${styleShow}`;
-                console.log(noOpoenWinowTimer);
+                console.log(noOpoenWindowTimer);
                 console.log('1');
             }
         }, time);
@@ -229,7 +228,7 @@ s    }) {
         styleShow: 'block',
     });
 
-    
+
     timerShowModal({
         selectorModal: ".popup-consultation",
         time: 2000,

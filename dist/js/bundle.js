@@ -11,10 +11,11 @@
 __webpack_require__.r(__webpack_exports__);
 // import windowOptions from "./windowOptions";
 const modal = () => {
-  // Верстка такова, что скрываем и показываем
+  let noOpoenWindowTimer = true; // Верстка такова, что скрываем и показываем
   // фон модального окна (его подложку)    
   //-------------------1. Функции---------------------------------------//
   // 1.1. Скрытие, показ модального окна 
+
   function actionModal(_ref) {
     let {
       /* кнопка, открываюая мод. окно */
@@ -76,6 +77,7 @@ const modal = () => {
 
       document.body.style.overflow = "hidden";
       document.body.style.marginRight = `${showWidthScroll()}px`;
+      noOpoenWindowTimer = false;
     } // Валидация на заполненность форм отдельных модальных
     // окон
     // function validationWindow() {
@@ -179,7 +181,7 @@ const modal = () => {
     }); // Закрытие окна на клавишу 
 
     document.addEventListener('keydown', e => {
-      if (e.code === "Escape" && modal.classList.contains(selectorShow)) {
+      if (e.code === "Escape" && window.getComputedStyle(modal).display == "block") {
         closeModal();
         document.body.style.overflow = "";
       }
@@ -194,18 +196,15 @@ const modal = () => {
       styleShow
     } = _ref2;
     setTimeout(function () {
-      document.querySelector(selectorModal).style.display = `${styleShow}`;
+      if (noOpoenWindowTimer) {
+        document.querySelector(selectorModal).style.display = `${styleShow}`;
+        console.log(noOpoenWindowTimer);
+        console.log('1');
+      }
     }, time);
   } //-------------------2. Вызовы функций---------------------------------------//
-  // 
-  // 2.1. Вызов открытия конкретного окна через время
+  // 2.1. Заказать дизайн
 
-
-  timerShowModal({
-    selectorModal: ".popup-design",
-    time: 2000,
-    styleShow: 'block'
-  }); // 2.2. Выбрать замерщика
 
   actionModal({
     /* кнопка, открываюая мод. окно */
@@ -218,6 +217,25 @@ const modal = () => {
     selectorClose: '.popup-close',
 
     /* класс (без точки), присваивающий display: block; */
+    styleShow: 'block'
+  }); // 2.2. Подобнее об услуге
+
+  actionModal({
+    /* кнопка, открываюая мод. окно */
+    selectorButton: ".button-consultation",
+
+    /* Подложка (фон) модального окна */
+    selectorModal: '.popup-consultation',
+
+    /* кнопка, закрывающая модальное окно */
+    selectorClose: '.popup-close',
+
+    /* класс (без точки), присваивающий display: block; */
+    styleShow: 'block'
+  });
+  timerShowModal({
+    selectorModal: ".popup-consultation",
+    time: 2000,
     styleShow: 'block'
   });
 };
