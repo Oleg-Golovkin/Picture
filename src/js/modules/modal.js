@@ -1,7 +1,7 @@
 // import windowOptions from "./windowOptions";
 
 const modal = () => {
-    let noOpoenWindowTimer = true;
+    let avtoOpoenModal = true;
     // Верстка такова, что скрываем и показываем
     // фон модального окна (его подложку)    
     //-------------------1. Функции---------------------------------------//
@@ -23,8 +23,7 @@ const modal = () => {
         selectorClose,
         /* класс, присваивающий display: block; */
         styleShow,
-        dataModals = true,
-        dataValidation = false,
+        removeButton = false,
     }) {
 
         const button = document.querySelectorAll(selectorButton),
@@ -63,7 +62,7 @@ const modal = () => {
             // Окно прокручивается
             document.body.style.overflow = "hidden";
             document.body.style.marginRight = `${showWidthScroll()}px`;
-            noOpoenWindowTimer = false;
+            avtoOpoenModal = false;
 
         }
 
@@ -132,21 +131,12 @@ const modal = () => {
         button.forEach(button => {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
-                /*  if (e.target && dataValidation) {
-                     if (e.target && validationWindow()) {
-                         showModal();
-                         clearInputs('#width');
-                         clearInputs('#height');
-                     } else if (modal.matches('.popup_calc_profile')) {
-                         showMessageError();
-                     }
-                     if (e.target && validationWindow()) {
-                         showModal();
-                     } else if (modal.matches('.popup_calc_end')) {
-                         showMessageError();
-                     }
-                 } else  */
-                if (e.target && !dataValidation) {
+
+                if (removeButton) {
+                    button.remove()
+                }
+
+                if (e.target) {
                     // Все окна закрываются
                     showModal();
                 }
@@ -166,7 +156,7 @@ const modal = () => {
         modal.addEventListener("click", (e) => {
             // Если кликаем только на подложку,
             // а не на само модальное окно
-            if (e.target === modal && dataModals) {
+            if (e.target === modal) {
                 // Все окна закрываются
                 closeModal();
                 document.body.style.overflow = "";
@@ -191,21 +181,30 @@ const modal = () => {
         styleShow,
     }) {
         setTimeout(function () {
-            if (noOpoenWindowTimer) {
+            if (avtoOpoenModal) {
                 document.querySelector(selectorModal).style.display = `${styleShow}`;
-                console.log(noOpoenWindowTimer);
-                console.log('1');
             }
         }, time);
     }
 
+    function showModalscroll({
+        selectorButton
+    }) {
+        window.addEventListener("scroll", () => {
+            if (avtoOpoenModal) {
+                if (document.documentElement.scrollHeight == document.documentElement.clientHeight + document.documentElement.scrollTop) {
+                    document.querySelector(selectorButton).click();
+                }
+            }
+        })
+    }
 
 
 
     //-------------------2. Вызовы функций---------------------------------------//
 
 
-    // 2.1. Заказать дизайн
+    // 2.1. Модальное окно заказать дизайн
     actionModal({
         /* кнопка, открываюая мод. окно */
         selectorButton: ".button-design",
@@ -216,7 +215,7 @@ const modal = () => {
         /* класс (без точки), присваивающий display: block; */
         styleShow: 'block',
     });
-    // 2.2. Подобнее об услуге
+    // 2.2. Модальное окно подробнее об услуге
     actionModal({
         /* кнопка, открываюая мод. окно */
         selectorButton: ".button-consultation",
@@ -228,13 +227,31 @@ const modal = () => {
         styleShow: 'block',
     });
 
-
-    timerShowModal({
-        selectorModal: ".popup-consultation",
-        time: 2000,
-        styleShow: 'block'
+    // 2.3. Модальное окно с подарком
+    actionModal({
+        /* кнопка, открываюая мод. окно */
+        selectorButton: ".fixed-gift",
+        /* Подложка (фон) модального окна */
+        selectorModal: '.popup-gift',
+        /* кнопка, закрывающая модальное окно */
+        selectorClose: '.popup-close',
+        /* класс (без точки), присваивающий display: block; */
+        styleShow: 'block',
+        removeButton: true
     });
 
+    // 2.4 Таймер показа модального окна
+    // timerShowModal({
+    //     selectorModal: ".popup-consultation",
+    //     time: 2000,
+    //     styleShow: 'block'
+    // });
+
+    // 2.5. При листании страницы до конца модальное окано
+
+    showModalscroll({
+        selectorButton: '.fixed-gift',
+    });
 };
 
 export default modal;
