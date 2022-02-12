@@ -191,12 +191,22 @@ const modal = () => {
         selectorButton
     }) {
         window.addEventListener("scroll", () => {
+            // 1. Если ранее не открывал окно. В обработчике открытия
+            // окна поставил эту переменную со значением false
             if (avtoOpoenModal) {
-                if (document.documentElement.scrollHeight == document.documentElement.clientHeight + document.documentElement.scrollTop) {
+                // 2. Для поддержки старых браузеров, берем любое из максимальных значений
+                // Math.max всей высоты страницы (document.documentElement.scrollHeight или
+                //     document.body.scrollHeight)
+                let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+                // 3. Если вся всота страницы scrollHeight меньше или равна прокрученной части .scrollTop + 
+                // высоты текущего окна .clientHeigh
+                if (scrollHeight <= document.documentElement.clientHeight + document.documentElement.scrollTop) {
+                //    4.  Повторно передаю ранее присовенный клик .click(); к кнопке вызова окна. 
+                // Т.е. если ранее присвоили клик, его еще раз можно вызвать
                     document.querySelector(selectorButton).click();
                 }
             }
-        })
+        });
     }
 
 

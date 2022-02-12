@@ -196,8 +196,18 @@ const modal = () => {
       selectorButton
     } = _ref3;
     window.addEventListener("scroll", () => {
+      // 1. Если ранее не открывал окно. В обработчике открытия
+      // окна поставил эту переменную со значением false
       if (avtoOpoenModal) {
-        if (document.documentElement.scrollHeight == document.documentElement.clientHeight + document.documentElement.scrollTop) {
+        // 2. Для поддержки старых браузеров, берем любое из максимальных значений
+        // Math.max всей высоты страницы (document.documentElement.scrollHeight или
+        //     document.body.scrollHeight)
+        let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight); // 3. Если вся всота страницы scrollHeight меньше или равна прокрученной части .scrollTop + 
+        // высоты текущего окна .clientHeigh
+
+        if (scrollHeight <= document.documentElement.clientHeight + document.documentElement.scrollTop) {
+          //    4.  Повторно передаю ранее присовенный клик .click(); к кнопке вызова окна. 
+          // Т.е. если ранее присвоили клик, его еще раз можно вызвать
           document.querySelector(selectorButton).click();
         }
       }
@@ -262,6 +272,99 @@ const modal = () => {
 
 /* harmony default export */ __webpack_exports__["default"] = (modal);
 
+/***/ }),
+
+/***/ "./src/js/modules/slider.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/slider.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const slider = () => {
+  function sliders(_ref) {
+    let {
+      slideSelector,
+      nextSlideSelector,
+      prevSlideSelector,
+      horizontally
+    } = _ref;
+    const slide = document.querySelectorAll(slideSelector),
+          nextSlide = document.querySelector(nextSlideSelector),
+          prevSlide = document.querySelector(prevSlideSelector);
+    let indexSlide = 1;
+    showSlide(indexSlide); // 3. showSlide запускается с цифрой 2 (то, 
+    // что получилось в nextSlide)
+    // Не записывать в функцию сам indexSlide, 
+
+    function showSlide(n) {
+      // 3.1 Прокрутка слайдов по кругу
+      // при достижении верхнего слайда
+      if (n > slide.length) {
+        //  Если то, что получилось в showSlide
+        // больше общего количества слайлов, то
+        // возвращаемся к первому слайду            
+        indexSlide = 1;
+      } // 3.1 При достижении ниже
+      // перого слайда
+
+
+      if (n < 1) {
+        indexSlide = slide.length;
+      } // 3.2 Удаляем все слайды
+
+
+      slide.forEach(item => {
+        item.style.display = "none";
+        item.classList.add("animate__animated");
+      }); // 3.3. Показываем слайд с соответствующим 
+      // индексом. По умолчанию 1
+
+      slide[indexSlide - 1].style.display = "block";
+      /* добавляем один из по порядку */
+      // -1, поскольку первый слайд под
+      // индексом 0     
+    }
+
+    try {
+      // 2. При нажатии кнопки вперед к счетчику
+      // прибавляется либо отнимается 1
+      nextSlide.addEventListener('click', () => {
+        showSlide(indexSlide += 1);
+        slide[indexSlide - 1].classList.remove("animate__backInLeft");
+        slide[indexSlide - 1].classList.add("animate__backInRight");
+      });
+      prevSlide.addEventListener('click', () => {
+        showSlide(indexSlide += -1);
+        slide[indexSlide - 1].classList.remove("animate__backInRight");
+        slide[indexSlide - 1].classList.add("animate__backInLeft");
+      });
+    } catch (e) {}
+
+    if (!horizontally) {
+      setInterval(function () {
+        showSlide(indexSlide += 1);
+        slide[indexSlide - 1].classList.add("animate__backInUp");
+      }, 3000);
+    }
+  } // Слайдер с отзывами
+
+
+  sliders({
+    slideSelector: ".feedback-slider-item",
+    nextSlideSelector: ".main-next-btn",
+    prevSlideSelector: ".main-prev-btn",
+    horizontally: true
+  }); // Слайдер портрет на холсте
+
+  sliders({
+    slideSelector: ".main-slider-item",
+    horizontally: false
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (slider);
+
 /***/ })
 
 /******/ 	});
@@ -311,11 +414,14 @@ var __webpack_exports__ = {};
   \************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modal */ "./src/js/modules/modal.js");
+/* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
+
 
 document.addEventListener('DOMContentLoaded', () => {
   "use strict";
 
   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  (0,_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])();
 });
 }();
 /******/ })()
