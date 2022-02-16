@@ -1,4 +1,4 @@
-function postForms(form, setWindowOptions) {
+function postForms(form) {
 
     const message = {
         loading: 'Загрузка...',
@@ -18,15 +18,16 @@ function postForms(form, setWindowOptions) {
         // 1.1. Информация, введенная форму, собирается
         // в специальном объекте new FormData(form)
         const formData = new FormData(form);
-        if (form.getAttribute('data-calck') == "end") {
-            for (let key in setWindowOptions) {
-                formData.append(key, setWindowOptions[key]);
-            }
-        }
-
         // 1.2. Отправляем данные на сервер. Выполняется функция
-        // post, тело которой описано в пункте п. 1.3       
-        post("assets/server.php", formData)
+        // post, тело которой описано в пункте п. 1.3  
+        let path;
+        if(form.closest(".popup-design")) {
+            path = "assets/picture.php";
+        } else {
+            path = "assets/server.php";
+        }
+        console.log(path);
+        post(path, formData)
             // 1.4.  Можем проверить, ушли ли инф. на сервер.
             // Через Promise
             // При положительном варианте событий при повторном
@@ -42,12 +43,16 @@ function postForms(form, setWindowOptions) {
                 form.reset();
                 setTimeout(function () {
                     statusMessage.remove();
-                    console.log("JR");
-                    document.querySelectorAll('[data-modals]').forEach(modal => {
-                        modal.classList.remove('show');
+                    document.querySelectorAll('[data-modal]').forEach(modal => {
+                        modal.classList.add("animate__animated", "animate__bounceOut");
+                        setTimeout(function () {
+                            modal.classList.remove("animate__animated", "animate__bounceOut")
+                            modal.style.display = "none";
+                        }, 1000);
                     });
-                    document.body.style.overflow = "";                   
+                    document.body.style.overflow = "";
                 }, 2000);
+
             });
     });
 
