@@ -65,8 +65,8 @@ const slider = () => {
         if(!horizontally) {
             setInterval(function(){
                 showSlide(indexSlide += 1);
-                slide[indexSlide - 1].classList.add("animate__backInUp");
-            }, 3000);
+                slide[indexSlide - 1].classList.add("animate__backInDown");
+            }, 4000);
             
         }
 

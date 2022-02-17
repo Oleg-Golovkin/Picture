@@ -6,6 +6,32 @@ function postForms(form) {
         failure: 'Что-то пошло не так...'
     };
 
+    // Не обязательный блок. Обрезаем имя загружаемого файла.
+    document.querySelectorAll("[name=upload]").forEach(input => {
+        input.addEventListener("input", () => {           
+        //    1. input.files - Доступ к свойствам загружаемых файлов,
+        //  которые содержатся в массиве
+        //    2. .name доступ к имени фалайла, который
+        //    содежится в объекте
+        //    3. split(".") преобразуем это имя в массив
+        // т.е. из bvz.pdf в ["bvz", "pdf"]
+            (input.files[0].name.split("."));
+            let dot;
+            // 4. Если имя файла больше 5
+            if(input.files[0].name.split(".")[0] > 5) {
+                dot = "...";
+            } else {
+                dot = ".";
+            }
+            // 5. Обрезаем имя файла .substring(0, 6) и добаляем либо 
+            // многоточие dot = "..."; или  dot = ".";  точку, + 
+            // вторая часть имени, т.е. pdf
+            let name = input.files[0].name.split(".")[0].substring(0, 6) + dot + input.files[0].name.split(".")[1];
+            // 6. Присваиваем имя к блоку, который его выводит
+            input.previousElementSibling.textContent = name;
+        });
+    });
+
 
     // 1. На каждую форму вешаем обработчик события.
     // с событием submit
@@ -18,15 +44,18 @@ function postForms(form) {
         // 1.1. Информация, введенная форму, собирается
         // в специальном объекте new FormData(form)
         const formData = new FormData(form);
-        // 1.2. Отправляем данные на сервер. Выполняется функция
-        // post, тело которой описано в пункте п. 1.3  
+
+        // Адресс сервера в зависимости от вида изображения
         let path;
-        if(form.closest(".popup-design")) {
+        if (form.closest(".popup-design")) {
             path = "assets/picture.php";
         } else {
             path = "assets/server.php";
         }
-        console.log(path);
+
+
+        // 1.2. Отправляем данные на сервер. Выполняется функция
+        // post, тело которой описано в пункте п. 1.3  
         post(path, formData)
             // 1.4.  Можем проверить, ушли ли инф. на сервер.
             // Через Promise
@@ -52,7 +81,6 @@ function postForms(form) {
                     });
                     document.body.style.overflow = "";
                 }, 2000);
-
             });
     });
 
