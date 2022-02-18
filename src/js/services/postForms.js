@@ -1,38 +1,12 @@
-function postForms(form) {
+import nameTrim from "../modules/nameTrim";
 
+
+function postForms(form) {
     const message = {
         loading: 'Загрузка...',
         success: 'Спасибо! Скоро мы с вами свяжемся',
         failure: 'Что-то пошло не так...'
-    };
-
-    // Не обязательный блок. Обрезаем имя загружаемого файла.
-    document.querySelectorAll("[name=upload]").forEach(input => {
-        input.addEventListener("input", () => {           
-        //    1. input.files - Доступ к свойствам загружаемых файлов,
-        //  которые содержатся в массиве
-        //    2. .name доступ к имени фалайла, который
-        //    содежится в объекте
-        //    3. split(".") преобразуем это имя в массив
-        // т.е. из bvz.pdf в ["bvz", "pdf"]
-            (input.files[0].name.split("."));
-            let dot;
-            // 4. Если имя файла больше 5
-            if(input.files[0].name.split(".")[0] > 5) {
-                dot = "...";
-            } else {
-                dot = ".";
-            }
-            // 5. Обрезаем имя файла .substring(0, 6) и добаляем либо 
-            // многоточие dot = "..."; или  dot = ".";  точку, + 
-            // вторая часть имени, т.е. pdf
-            let name = input.files[0].name.split(".")[0].substring(0, 6) + dot + input.files[0].name.split(".")[1];
-            // 6. Присваиваем имя к блоку, который его выводит
-            input.previousElementSibling.textContent = name;
-        });
-    });
-
-
+    }; 
     // 1. На каждую форму вешаем обработчик события.
     // с событием submit
     form.addEventListener("submit", (e) => {
@@ -52,6 +26,9 @@ function postForms(form) {
         } else {
             path = "assets/server.php";
         }
+
+        // Не обязательный блок. Обрезаем имя загружаемого файла.
+        nameTrim();
 
 
         // 1.2. Отправляем данные на сервер. Выполняется функция
@@ -73,7 +50,7 @@ function postForms(form) {
                 setTimeout(function () {
                     statusMessage.remove();
                     document.querySelectorAll('[data-modal]').forEach(modal => {
-                        modal.classList.add("animate__animated", "animate__bounceOut");
+                        modal.classList.add("animate__animated", "animate__bounceOut")
                         setTimeout(function () {
                             modal.classList.remove("animate__animated", "animate__bounceOut")
                             modal.style.display = "none";
