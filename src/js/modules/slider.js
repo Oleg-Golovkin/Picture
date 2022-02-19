@@ -63,10 +63,10 @@ const slider = () => {
             } catch (e) {}
 
         if(!horizontally) {
-            setInterval(function(){
-                showSlide(indexSlide += 1);
-                slide[indexSlide - 1].classList.add("animate__backInDown");
-            }, 4000);
+            setInterval(function(){                
+                showSlide(indexSlide += 1);     
+                slide[indexSlide - 1].classList.add("animate__backInUp");           
+            }, 2000);
             
         }
 

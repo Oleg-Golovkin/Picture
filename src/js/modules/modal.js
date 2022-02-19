@@ -133,7 +133,7 @@ const modal = () => {
                 e.preventDefault();
 
                 if (removeButton) {
-                    button.remove()
+                    button.remove();
                 }
 
                 if (e.target) {
