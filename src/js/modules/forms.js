@@ -5,7 +5,7 @@ const forms = () => {
     forms.forEach(form => {
         postForms(form);
         // console.log(form.closest(".popup-design"));
-    });
+    });    
 };
 
 export default forms;

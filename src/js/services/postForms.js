@@ -1,4 +1,5 @@
-import nameTrim from "../modules/nameTrim";
+ // Не обязательный блок. Обрезаем имя загружаемого файла.
+import "../modules/nameTrim";
 
 
 function postForms(form) {
@@ -7,7 +8,6 @@ function postForms(form) {
         success: 'Спасибо! Скоро мы с вами свяжемся',
         failure: 'Что-то пошло не так...'
     }; 
-    nameTrim();
     // 1. На каждую форму вешаем обработчик события.
     // с событием submit
     form.addEventListener("submit", (e) => {
@@ -26,12 +26,7 @@ function postForms(form) {
             path = "assets/picture.php";
         } else {
             path = "assets/server.php";
-        }
-
-        // Не обязательный блок. Обрезаем имя загружаемого файла.
-        
-
-
+        }    
         // 1.2. Отправляем данные на сервер. Выполняется функция
         // post, тело которой описано в пункте п. 1.3  
         post(path, formData)
