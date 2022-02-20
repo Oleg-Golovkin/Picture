@@ -44,7 +44,7 @@ const accordion = () => {
 						<h4>${item.title}</h4>
 						<a href="#">Подробнее</a>
 					</div>`;
-                    row.append(div);;
+                    row.append(div);
                 });
             })
             .catch(() => {
