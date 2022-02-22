@@ -1,6 +1,169 @@
 /******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const accordion = () => {
+  const btn = document.querySelector(".button-transparent"),
+        row = document.querySelector("#row"); // styles2.forEach(item => {
+  //     item.classList.add("animate__animated", "animate__fadeInDown");
+  //     item.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1");
+  //     item.classList.remove("hidden-lg", "hidden-md", "hidden-sm", "hidden-xs");
+  // });
+
+  btn.addEventListener("click", e => {
+    // styles2.forEach(item => {
+    //     item.style.display = "block";
+    //     item.classList.remove("hidden-lg", "hidden-md", "hidden-sm", "hidden-xs");
+    //     item.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1");
+    // });
+    // 1.3. Настраиваем механизм отправки данных на сервер
+    // async - чтобы функция выполнилась после получения данных
+    // с сервера.
+    // Вместо url в пункте 1.2. подставится адрес
+    // Вместо request в пункте 1.2. подставится то, что
+    // будем отправлять на сервер - new FormData(form)
+    const post = async function (url) {
+      let res = await fetch(url); // Возвращаем полученный ответ от сервера о том, что
+      // информация отправлена .then или нет .catch
+
+      return await res.json();
+    };
+
+    post("../assets/db.json") // 1.4.  Можем проверить, ушли ли инф. на сервер.
+    // Через Promise
+    // При положительном варианте событий при повторном
+    // обращении к .then можем выполнять действия
+    .then(data => {
+      data.styles.forEach(item => {
+        console.log(item);
+        const div = document.createElement("div");
+        div.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1", "animate__animated", "animate__fadeInDown");
+        div.innerHTML = `<div class=styles-block>
+						<img src=${item.src} alt>
+						<h4>${item.title}</h4>
+						<a href="#">Подробнее</a>
+					</div>`;
+        row.append(div);
+      });
+    }).catch(() => {
+      console.log("нет");
+    }).finally(() => {
+      e.target.remove();
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordion);
+
+/***/ }),
+
+/***/ "./src/js/modules/calculator.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/calculator.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const calculator = () => {
+  // const sizeBlock = document.querySelector("#size"),
+  //     materialBlock = document.querySelector("#material"),
+  //     optionsBlock = document.querySelector("#options"),
+  //     promocodeBlock = document.querySelector(".promocode"),
+  //     resultBlock = document.querySelector(".calc-price");
+  // function calculator(targetSelector) {
+  //     let num = (+sizeBlock) + (+materialBlock) + (+optionsBlock)
+  //     // if (e.target && e.target.matches("#size")) {
+  //     //     resSizes = e.target.value;
+  //     // }
+  //     // if (e.target && e.target.matches("#material")) {
+  //     //     resMaterial = e.target.value;
+  //     // }
+  //     // if (e.target && e.target.matches("#options")) {
+  //     //     resOptions = e.target.value;
+  //     // }
+  //     if (sizeBlock == "" || materialBlock.value == "") {
+  //         resultBlock.innerHTML = "Выберите размер и материал картины";
+  //     } else if (promocodeBlock.value == "IWANTPOPART") {
+  //         resultBlock.innerHTML = `${num * 0.3} рублей`;
+  //     } else {            
+  //         resultBlock.innerHTML = `${num} рублей`;
+  //     }
+  // }
+  const select = document.querySelector("form#select"),
+        totalPrice = document.querySelector(".calc-price");
+  let num, resSizes, resMaterial, resOptions;
+  select.addEventListener("change", e => {
+    if (e.target && e.target.matches("#size")) {
+      resSizes = e.target.value;
+    }
+
+    if (e.target && e.target.matches("#material")) {
+      resMaterial = e.target.value;
+    }
+
+    if (e.target && e.target.matches("#options")) {
+      resOptions = e.target.value;
+    }
+
+    if (!resSizes || !resMaterial) {
+      totalPrice.innerHTML = "";
+    } else {
+      if (resSizes && resMaterial && resOptions) {
+        num = +resSizes + +resMaterial + +resOptions;
+        totalPrice.innerHTML = `${num} рублей`;
+        return num;
+      } else {
+        num = +resSizes + +resMaterial;
+        totalPrice.innerHTML = `${num} рублей`;
+        return num;
+      }
+    }
+  });
+  const promocode = document.querySelector(".promocode");
+  promocode.addEventListener("input", e => {
+    if (e.target.value == "IWANTPOPART") {
+      console.log("fsdf");
+      totalPrice.innerHTML = `${num * 0.3} рублей`;
+      return num;
+    } else {
+      totalPrice.innerHTML = `${num} рублей`;
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (calculator);
+
+/***/ }),
+
+/***/ "./src/js/modules/forms.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/forms.js ***!
+  \*********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_postForms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/postForms */ "./src/js/services/postForms.js");
+
+
+const forms = () => {
+  const forms = document.querySelectorAll("form");
+  forms.forEach(form => {
+    (0,_services_postForms__WEBPACK_IMPORTED_MODULE_0__["default"])(form); // console.log(form.closest(".popup-design"));
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (forms);
+
+/***/ }),
 
 /***/ "./src/js/modules/modal.js":
 /*!*********************************!*\
@@ -8,6 +171,7 @@
   \*********************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 // import windowOptions from "./windowOptions";
 const modal = () => {
@@ -274,12 +438,49 @@ const modal = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/nameTrim.js":
+/*!************************************!*\
+  !*** ./src/js/modules/nameTrim.js ***!
+  \************************************/
+/***/ (function() {
+
+//____________Обрезаем имя загружаемого файла_____________//
+document.querySelectorAll("[name=upload]").forEach(input => {
+  input.addEventListener("input", () => {
+    //    1. input.files - Доступ к свойствам загружаемых файлов,
+    //  которые содержатся в массиве
+    //    2. .name доступ к имени фалайла, который
+    //    содежится в объекте
+    //    3. split(".") преобразуем это имя в массив
+    // т.е. из bvz.pdf в ["bvz", "pdf"]
+    // (input.files[0].name.split("."));
+    let dot; // 4. Если имя файла больше 5
+
+    if (input.files[0].name.split(".")[0].length > 5) {
+      dot = "...";
+    } else {
+      dot = ".";
+    } // 5. Обрезаем имя файла .substring(0, 6) и добаляем либо 
+    // многоточие dot = "..."; или  dot = ".";  точку, + 
+    // вторая часть имени, т.е. pdf
+
+
+    let name = input.files[0].name.split(".")[0].substring(0, 6) + dot + input.files[0].name.split(".")[1]; // 6. Присваиваем имя к блоку, который его выводит
+
+    console.log(name);
+    input.previousElementSibling.textContent = name;
+  });
+});
+
+/***/ }),
+
 /***/ "./src/js/modules/slider.js":
 /*!**********************************!*\
   !*** ./src/js/modules/slider.js ***!
   \**********************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 const slider = () => {
   function sliders(_ref) {
@@ -345,7 +546,7 @@ const slider = () => {
       setInterval(function () {
         showSlide(indexSlide += 1);
         slide[indexSlide - 1].classList.add("animate__backInUp");
-      }, 3000);
+      }, 2000);
     }
   } // Слайдер с отзывами
 
@@ -364,6 +565,93 @@ const slider = () => {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (slider);
+
+/***/ }),
+
+/***/ "./src/js/services/postForms.js":
+/*!**************************************!*\
+  !*** ./src/js/services/postForms.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_nameTrim__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modules/nameTrim */ "./src/js/modules/nameTrim.js");
+/* harmony import */ var _modules_nameTrim__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_modules_nameTrim__WEBPACK_IMPORTED_MODULE_0__);
+// Не обязательный блок. Обрезаем имя загружаемого файла.
+
+
+function postForms(form) {
+  const message = {
+    loading: 'Загрузка...',
+    success: 'Спасибо! Скоро мы с вами свяжемся',
+    failure: 'Что-то пошло не так...'
+  }; // 1. На каждую форму вешаем обработчик события.
+  // с событием submit
+
+  form.addEventListener("submit", e => {
+    e.preventDefault(); // НЕ ОБЯЗАТЕЛЬНЫЙ БЛОК
+
+    let statusMessage = document.createElement('div');
+    statusMessage.classList.add('status');
+    form.appendChild(statusMessage); // 1.1. Информация, введенная форму, собирается
+    // в специальном объекте new FormData(form)
+
+    const formData = new FormData(form); // Адресс сервера в зависимости от вида изображения
+
+    let path;
+
+    if (form.closest(".popup-design")) {
+      path = "assets/picture.php";
+    } else {
+      path = "assets/server.php";
+    } // 1.2. Отправляем данные на сервер. Выполняется функция
+    // post, тело которой описано в пункте п. 1.3  
+
+
+    post(path, formData) // 1.4.  Можем проверить, ушли ли инф. на сервер.
+    // Через Promise
+    // При положительном варианте событий при повторном
+    // обращении к .then можем выполнять действия
+    .then(data => {
+      console.log(data);
+      statusMessage.textContent = message.success;
+    }).catch(() => {
+      statusMessage.textContent = message.failure;
+    }).finally(() => {
+      form.reset();
+      setTimeout(function () {
+        statusMessage.remove();
+        document.querySelectorAll('[data-modal]').forEach(modal => {
+          modal.classList.add("animate__animated", "animate__bounceOut");
+          setTimeout(function () {
+            modal.classList.remove("animate__animated", "animate__bounceOut");
+            modal.style.display = "none";
+          }, 1000);
+        });
+        document.body.style.overflow = "";
+      }, 2000);
+    });
+  }); // 1.3. Настраиваем механизм отправки данных на сервер
+  // async - чтобы функция выполнилась после получения данных
+  // с сервера.
+  // Вместо url в пункте 1.2. подставится адрес
+  // Вместо request в пункте 1.2. подставится то, что
+  // будем отправлять на сервер - new FormData(form)
+
+  const post = async function (url, request) {
+    let res = await fetch(url, {
+      method: "POST",
+      // отправляем информацию на сервер
+      body: request
+    }); // Возвращаем полученный ответ от сервера о том, что
+    // информация отправлена .then или нет .catch
+
+    return await res.text();
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (postForms);
 
 /***/ })
 
@@ -394,6 +682,35 @@ const slider = () => {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -407,14 +724,21 @@ const slider = () => {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 !function() {
+"use strict";
 /*!************************!*\
   !*** ./src/js/main.js ***!
   \************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modal */ "./src/js/modules/modal.js");
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
+/* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -422,6 +746,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
   (0,_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  (0,_modules_accordion__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_4__["default"])();
 });
 }();
 /******/ })()

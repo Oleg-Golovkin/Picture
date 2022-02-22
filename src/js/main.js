@@ -2,7 +2,7 @@ import modal from "./modules/modal";
 import slider from "./modules/slider";
 import forms from "./modules/forms";
 import accordion from "./modules/accordion";
-import select from "./modules/select";
+import calculator from "./modules/calculator";
 
 document.addEventListener('DOMContentLoaded', () => {
     "use strict";
@@ -10,5 +10,5 @@ document.addEventListener('DOMContentLoaded', () => {
     slider();
     forms();
     accordion();
-    select();
+    calculator();
 });
