@@ -51,7 +51,7 @@ const calculator = () => {
             } else {
                 num = (+resSizes) + (+resMaterial);
             }            
-            if (!resSizes || !resMaterial) {
+            if (!resSizes || !resMaterial) { 
                 totalPrice.innerHTML = "";
             } else if (promocodeBlock.value == "IWANTPOPART") {
                 totalPrice.innerHTML = `${Math.round(num * 2)} рублей`;
