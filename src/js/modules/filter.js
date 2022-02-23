@@ -4,7 +4,14 @@ const filter = () => {
         portfolioWrapper = document.querySelector(".portfolio-wrapper"),
         li = portfolioMenu.querySelectorAll("li"),
         portfolio = document.querySelector("#portfolio"),
-        div = portfolioWrapper.querySelectorAll("div");
+        div = portfolioWrapper.querySelectorAll("div"),
+        girl = portfolioWrapper.querySelectorAll(".girl"),
+        lovers = portfolioWrapper.querySelectorAll(".lovers"),
+        guy = portfolioWrapper.querySelectorAll(".guy"),
+        chef = portfolioWrapper.querySelectorAll(".chef");
+
+
+
     const choice = () => {
         portfolio.addEventListener("click", (e) => {
             li.forEach(li => {
@@ -14,20 +21,34 @@ const filter = () => {
                 li.style.display = "none";
             });
 
-            if (e.target && e.target.matches("li")) {
+            if (e.target.matches(".lovers")) {
                 e.target.classList.add("active");
-                console.log(e.target.matches(".girl"));
-                // div.forEach(li => {
-               
-                // });
+                lovers.forEach(selector => {
+                    selector.style.display = "block";
+                });
             }
-
+            if (e.target.matches(".girl")) {
+                e.target.classList.add("active");
+                girl.forEach(selector => {
+                    selector.style.display = "block";
+                });
+            }
+            if (e.target.matches(".guy")) {
+                e.target.classList.add("active");
+                guy.forEach(selector => {
+                    selector.style.display = "block";
+                });
+            }
+            if (e.target.matches(".chef")) {
+                e.target.classList.add("active");
+                chef.forEach(selector => {
+                    selector.style.display = "block";
+                });
+            }
         });
     };
 
     choice();
-
-
 }
 
 export default filter;
