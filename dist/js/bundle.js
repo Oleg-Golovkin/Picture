@@ -19,8 +19,9 @@ const calculator = () => {
   const finish = () => {
     // 1.1. Формула для подсчета. Использовал
     // только одну переменную, получающую итоговый 
-    // результат
-    let num = Math.round(+sizeBlock.value) + Math.round(+materialBlock.value) + Math.round(+optionsBlock.value); //1.2. Если любой из select не задействован
+    // результат  
+    let num;
+    num = Math.round(+sizeBlock.value) + Math.round(+materialBlock.value) + Math.round(+optionsBlock.value); //1.2. Если любой из select не задействован
 
     if (sizeBlock.value == "" || materialBlock.value == "") {
       resultBlock.innerHTML = "Выберите размер и материал картины"; // 1.3. Если введен промокод. То полученный результат
@@ -33,6 +34,8 @@ const calculator = () => {
     } else {
       resultBlock.innerHTML = `${num} рублей`;
     }
+
+    return num;
   }; // 2. Подставляем функцию по подсчету в каждое событие 
   // в виде тела события.
   // Чтобы она впитывала в себя необходимые для подсчета 
@@ -43,31 +46,29 @@ const calculator = () => {
   materialBlock.addEventListener("change", finish);
   optionsBlock.addEventListener("change", finish);
   promocodeBlock.addEventListener("input", finish);
+  let obj = {
+    price: finish()
+  };
+  return obj;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (calculator);
 
 /***/ }),
 
-/***/ "./src/js/modules/forms.js":
-/*!*********************************!*\
-  !*** ./src/js/modules/forms.js ***!
-  \*********************************/
+/***/ "./src/js/modules/filter.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/filter.js ***!
+  \**********************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _services_postForms__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/postForms */ "./src/js/services/postForms.js");
-
-
-const forms = () => {
-  const forms = document.querySelectorAll("form");
-  forms.forEach(form => {
-    (0,_services_postForms__WEBPACK_IMPORTED_MODULE_0__["default"])(form); // console.log(form.closest(".popup-design"));
-  });
+const filter = () => {
+  const choice = () => {};
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (forms);
+/* harmony default export */ __webpack_exports__["default"] = (filter);
 
 /***/ }),
 
@@ -537,59 +538,75 @@ const slider = () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_nameTrim__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../modules/nameTrim */ "./src/js/modules/nameTrim.js");
 /* harmony import */ var _modules_nameTrim__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_modules_nameTrim__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../modules/calculator */ "./src/js/modules/calculator.js");
 // Не обязательный блок. Обрезаем имя загружаемого файла.
 
 
-function postForms(form) {
+
+function postForms() {
   const message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Скоро мы с вами свяжемся',
     failure: 'Что-то пошло не так...'
-  }; // 1. На каждую форму вешаем обработчик события.
-  // с событием submit
+  };
+  const forms = document.querySelectorAll("form");
+  forms.forEach(form => {
+    // 1. На каждую форму вешаем обработчик события.
+    // с событием submit
+    form.addEventListener("submit", e => {
+      e.preventDefault(); // НЕ ОБЯЗАТЕЛЬНЫЙ БЛОК
 
-  form.addEventListener("submit", e => {
-    e.preventDefault(); // НЕ ОБЯЗАТЕЛЬНЫЙ БЛОК
+      let statusMessage = document.createElement('div');
+      statusMessage.classList.add('status');
+      form.appendChild(statusMessage); // 1.1. Информация, введенная форму, собирается
+      // в специальном объекте new FormData(form)
 
-    let statusMessage = document.createElement('div');
-    statusMessage.classList.add('status');
-    form.appendChild(statusMessage); // 1.1. Информация, введенная форму, собирается
-    // в специальном объекте new FormData(form)
+      const formData = new FormData(form); // Адресс сервера в зависимости от вида изображения
 
-    const formData = new FormData(form); // Адресс сервера в зависимости от вида изображения
+      let path;
 
-    let path;
-
-    if (form.closest(".popup-design")) {
-      path = "assets/picture.php";
-    } else {
-      path = "assets/server.php";
-    } // 1.2. Отправляем данные на сервер. Выполняется функция
-    // post, тело которой описано в пункте п. 1.3  
+      if (form.closest(".popup-design") || form.closest(".calc")) {
+        path = "assets/picture.php";
+      } else {
+        path = "assets/server.php";
+      } // Здесь объект, записанный в 
+      // calculator
 
 
-    post(path, formData) // 1.4.  Можем проверить, ушли ли инф. на сервер.
-    // Через Promise
-    // При положительном варианте событий при повторном
-    // обращении к .then можем выполнять действия
-    .then(data => {
-      console.log(data);
-      statusMessage.textContent = message.success;
-    }).catch(() => {
-      statusMessage.textContent = message.failure;
-    }).finally(() => {
-      form.reset();
-      setTimeout(function () {
-        statusMessage.remove();
-        document.querySelectorAll('[data-modal]').forEach(modal => {
-          modal.classList.add("animate__animated", "animate__bounceOut");
-          setTimeout(function () {
-            modal.classList.remove("animate__animated", "animate__bounceOut");
-            modal.style.display = "none";
-          }, 1000);
-        });
-        document.body.style.overflow = "";
-      }, 2000);
+      let obj = (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+      for (let key in obj) {
+        formData.append(key, obj[key]);
+      }
+
+      post("assets/server.php", formData).then(data => {
+        console.log(data);
+      }); // 1.2. Отправляем данные на сервер. Выполняется функция
+      // post, тело которой описано в пункте п. 1.3  
+
+      post(path, formData) // 1.4.  Можем проверить, ушли ли инф. на сервер.
+      // Через Promise
+      // При положительном варианте событий при повторном
+      // обращении к .then можем выполнять действия
+      .then(data => {
+        console.log(data);
+        statusMessage.textContent = message.success;
+      }).catch(() => {
+        statusMessage.textContent = message.failure;
+      }).finally(() => {
+        form.reset();
+        setTimeout(function () {
+          statusMessage.remove();
+          document.querySelectorAll('[data-modal]').forEach(modal => {
+            modal.classList.add("animate__animated", "animate__bounceOut");
+            setTimeout(function () {
+              modal.classList.remove("animate__animated", "animate__bounceOut");
+              modal.style.display = "none";
+            }, 1000);
+          });
+          document.body.style.overflow = "";
+        }, 2000);
+      });
     });
   }); // 1.3. Настраиваем механизм отправки данных на сервер
   // async - чтобы функция выполнилась после получения данных
@@ -692,9 +709,11 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modal */ "./src/js/modules/modal.js");
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
-/* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
-/* harmony import */ var _modules_moreStyles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/moreStyles */ "./src/js/modules/moreStyles.js");
-/* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+/* harmony import */ var _modules_moreStyles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/moreStyles */ "./src/js/modules/moreStyles.js");
+/* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
+/* harmony import */ var _services_postForms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/postForms */ "./src/js/services/postForms.js");
+/* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+
 
 
 
@@ -705,9 +724,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
   (0,_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  (0,_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  (0,_modules_moreStyles__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_4__["default"])();
+  (0,_modules_moreStyles__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  (0,_services_postForms__WEBPACK_IMPORTED_MODULE_4__["default"])();
+  (0,_modules_filter__WEBPACK_IMPORTED_MODULE_5__["default"])();
 });
 }();
 /******/ })()

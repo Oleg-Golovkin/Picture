@@ -3,6 +3,7 @@ import slider from "./modules/slider";
 import moreStyles from "./modules/moreStyles";
 import calculator from "./modules/calculator";
 import postForms from "./services/postForms";
+import filter from "./modules/filter";
 
 document.addEventListener('DOMContentLoaded', () => {
     "use strict";
@@ -11,4 +12,5 @@ document.addEventListener('DOMContentLoaded', () => {
     moreStyles();
     calculator();
     postForms();
+    filter();
 });

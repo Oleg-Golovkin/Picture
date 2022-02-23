@@ -13,8 +13,8 @@ const webpack = require('webpack-stream');
 // переменная для его настроек
 const path = require('path');
 
-// const dist = './dist/';
-const dist = 'C:/MAMP/htdocs/'; 
+const dist = './dist/';
+// const dist = 'C:/MAMP/htdocs/'; 
 // const dist = '/Applications/MAMP/htdocs/';
 
 //1. Настраиваем обновление страницы
@@ -199,5 +199,5 @@ gulp.task('webpack', function () {
 });
 
 // 6. Задача по запуску всех задач одновременно (паралельно).
-gulp.task('default', gulp.parallel('watch', /* 'server',  */'styles', 'html', 'fonts', 'icons', 'image', 'webpack', "copy-assets"));
+gulp.task('default', gulp.parallel('watch', 'server', 'styles', 'html', 'fonts', 'icons', 'image', 'webpack', "copy-assets"));
 // Первый параметр - по умолчанию
