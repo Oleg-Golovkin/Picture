@@ -13,6 +13,7 @@ const filter = () => {
 
 
     const choice = () => {
+        // let selectors = portfolioWrapper.querySelectorAll();
         portfolio.addEventListener("click", (e) => {
             li.forEach(li => {
                 li.classList.remove("active");
@@ -49,6 +50,7 @@ const filter = () => {
     };
 
     choice();
-}
+  
+};
 
 export default filter;

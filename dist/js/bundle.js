@@ -76,6 +76,7 @@ const filter = () => {
         chef = portfolioWrapper.querySelectorAll(".chef");
 
   const choice = () => {
+    // let selectors = portfolioWrapper.querySelectorAll();
     portfolio.addEventListener("click", e => {
       li.forEach(li => {
         li.classList.remove("active");
