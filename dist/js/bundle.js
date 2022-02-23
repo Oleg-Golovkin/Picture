@@ -1,69 +1,6 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/js/modules/accordion.js":
-/*!*************************************!*\
-  !*** ./src/js/modules/accordion.js ***!
-  \*************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-const accordion = () => {
-  const btn = document.querySelector(".button-transparent"),
-        row = document.querySelector("#row"); // styles2.forEach(item => {
-  //     item.classList.add("animate__animated", "animate__fadeInDown");
-  //     item.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1");
-  //     item.classList.remove("hidden-lg", "hidden-md", "hidden-sm", "hidden-xs");
-  // });
-
-  btn.addEventListener("click", e => {
-    // styles2.forEach(item => {
-    //     item.style.display = "block";
-    //     item.classList.remove("hidden-lg", "hidden-md", "hidden-sm", "hidden-xs");
-    //     item.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1");
-    // });
-    // 1.3. Настраиваем механизм отправки данных на сервер
-    // async - чтобы функция выполнилась после получения данных
-    // с сервера.
-    // Вместо url в пункте 1.2. подставится адрес
-    // Вместо request в пункте 1.2. подставится то, что
-    // будем отправлять на сервер - new FormData(form)
-    const post = async function (url) {
-      let res = await fetch(url); // Возвращаем полученный ответ от сервера о том, что
-      // информация отправлена .then или нет .catch
-
-      return await res.json();
-    };
-
-    post("../assets/db.json") // 1.4.  Можем проверить, ушли ли инф. на сервер.
-    // Через Promise
-    // При положительном варианте событий при повторном
-    // обращении к .then можем выполнять действия
-    .then(data => {
-      data.styles.forEach(item => {
-        console.log(item);
-        const div = document.createElement("div");
-        div.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1", "animate__animated", "animate__fadeInDown");
-        div.innerHTML = `<div class=styles-block>
-						<img src=${item.src} alt>
-						<h4>${item.title}</h4>
-						<a href="#">Подробнее</a>
-					</div>`;
-        row.append(div);
-      });
-    }).catch(() => {
-      console.log("нет");
-    }).finally(() => {
-      e.target.remove();
-    });
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (accordion);
-
-/***/ }),
-
 /***/ "./src/js/modules/calculator.js":
 /*!**************************************!*\
   !*** ./src/js/modules/calculator.js ***!
@@ -73,65 +10,39 @@ const accordion = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 const calculator = () => {
-  // const sizeBlock = document.querySelector("#size"),
-  //     materialBlock = document.querySelector("#material"),
-  //     optionsBlock = document.querySelector("#options"),
-  //     promocodeBlock = document.querySelector(".promocode"),
-  //     resultBlock = document.querySelector(".calc-price");
-  // const finish = () => {
-  //     let num = (Math.round(+sizeBlock.value)) + 
-  //     (Math.round(+materialBlock.value)) + 
-  //     (Math.round(+optionsBlock.value));
-  //     if (sizeBlock.value == "" || materialBlock.value == "") {
-  //         resultBlock.innerHTML = "Выберите размер и материал картины";
-  //     } else if (promocodeBlock.value == "IWANTPOPART") {
-  //         num =  Math.round(num * 0.3);
-  //         resultBlock.innerHTML = `${num} рублей`;
-  //     } else {            
-  //         resultBlock.innerHTML = `${num} рублей`;
-  //     }
-  // };
-  // sizeBlock.addEventListener("change", finish);
-  // materialBlock.addEventListener("change", finish);
-  // optionsBlock.addEventListener("change", finish);
-  // promocodeBlock.addEventListener("input", finish);
-  const totalPrice = document.querySelector(".calc-price"),
+  const sizeBlock = document.querySelector("#size"),
+        materialBlock = document.querySelector("#material"),
+        optionsBlock = document.querySelector("#options"),
         promocodeBlock = document.querySelector(".promocode"),
-        select = document.querySelector("#select");
-  let num, resSizes, resMaterial, resOptions;
+        resultBlock = document.querySelector(".calc-price"); // 1. Создаем функцию по подсчету.
 
-  function resualt(trigger, event) {
-    trigger.addEventListener(event, e => {
-      if (e.target && e.target.matches("#size")) {
-        resSizes = e.target.value;
-      }
+  const finish = () => {
+    // 1.1. Формула для подсчета. Использовал
+    // только одну переменную, получающую итоговый 
+    // результат
+    let num = Math.round(+sizeBlock.value) + Math.round(+materialBlock.value) + Math.round(+optionsBlock.value); //1.2. Если любой из select не задействован
 
-      if (e.target && e.target.matches("#material")) {
-        resMaterial = e.target.value;
-      }
+    if (sizeBlock.value == "" || materialBlock.value == "") {
+      resultBlock.innerHTML = "Выберите размер и материал картины"; // 1.3. Если введен промокод. То полученный результат
+      // в num  уменьшается
+    } else if (promocodeBlock.value == "IWANTPOPART") {
+      num = Math.round(num * 0.3);
+      resultBlock.innerHTML = `${num} рублей`; // 1.4. Во всех остальных случаях:
+      // - не выбрано два и более значений
+      // - не введен промокод
+    } else {
+      resultBlock.innerHTML = `${num} рублей`;
+    }
+  }; // 2. Подставляем функцию по подсчету в каждое событие 
+  // в виде тела события.
+  // Чтобы она впитывала в себя необходимые для подсчета 
+  // значения
 
-      if (e.target && e.target.matches("#options")) {
-        resOptions = e.target.value;
-      }
 
-      if (resOptions) {
-        num = +resSizes + +resMaterial + +resOptions;
-      } else {
-        num = +resSizes + +resMaterial;
-      }
-
-      if (!resSizes || !resMaterial) {
-        totalPrice.innerHTML = "";
-      } else if (promocodeBlock.value == "IWANTPOPART") {
-        totalPrice.innerHTML = `${Math.round(num * 2)} рублей`;
-      } else {
-        totalPrice.innerHTML = `${num} рублей`;
-      }
-    });
-  }
-
-  resualt(select, "change");
-  resualt(promocodeBlock, "input");
+  sizeBlock.addEventListener("change", finish);
+  materialBlock.addEventListener("change", finish);
+  optionsBlock.addEventListener("change", finish);
+  promocodeBlock.addEventListener("input", finish);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (calculator);
@@ -433,6 +344,59 @@ const modal = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/moreStyles.js":
+/*!**************************************!*\
+  !*** ./src/js/modules/moreStyles.js ***!
+  \**************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const moreStyles = () => {
+  const btn = document.querySelector(".button-transparent"),
+        row = document.querySelector("#row");
+  btn.addEventListener("click", e => {
+    // 1.3. Настраиваем механизм отправки данных на сервер
+    // async - чтобы функция выполнилась после получения данных
+    // с сервера.
+    // Вместо url в пункте 1.2. подставится адрес
+    // Вместо request в пункте 1.2. подставится то, что
+    // будем отправлять на сервер - new FormData(form)
+    const post = async function (url) {
+      let res = await fetch(url); // Возвращаем полученный ответ от сервера о том, что
+      // информация отправлена .then или нет .catch
+
+      return await res.json();
+    };
+
+    post("../assets/db.json") // 1.4.  Можем проверить, ушли ли инф. на сервер.
+    // Через Promise
+    // При положительном варианте событий при повторном
+    // обращении к .then можем выполнять действия
+    .then(data => {
+      data.styles.forEach(item => {
+        console.log(item);
+        const div = document.createElement("div");
+        div.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1", "animate__animated", "animate__fadeInDown");
+        div.innerHTML = `<div class=styles-block>
+						<img src=${item.src} alt>
+						<h4>${item.title}</h4>
+						<a href="#">Подробнее</a>
+					</div>`;
+        row.append(div);
+      });
+    }).catch(() => {
+      console.log("нет");
+    }).finally(() => {
+      e.target.remove();
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (moreStyles);
+
+/***/ }),
+
 /***/ "./src/js/modules/nameTrim.js":
 /*!************************************!*\
   !*** ./src/js/modules/nameTrim.js ***!
@@ -729,7 +693,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/modal */ "./src/js/modules/modal.js");
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
-/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_moreStyles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/moreStyles */ "./src/js/modules/moreStyles.js");
 /* harmony import */ var _modules_calculator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/calculator */ "./src/js/modules/calculator.js");
 
 
@@ -742,7 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (0,_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
   (0,_modules_slider__WEBPACK_IMPORTED_MODULE_1__["default"])();
   (0,_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  (0,_modules_accordion__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  (0,_modules_moreStyles__WEBPACK_IMPORTED_MODULE_3__["default"])();
   (0,_modules_calculator__WEBPACK_IMPORTED_MODULE_4__["default"])();
 });
 }();

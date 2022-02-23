@@ -22,7 +22,7 @@ function postForms(form) {
 
         // Адресс сервера в зависимости от вида изображения
         let path;
-        if (form.closest(".popup-design")) {
+        if (form.closest(".popup-design") || form.closest(".calc")) {
             path = "assets/picture.php";
         } else {
             path = "assets/server.php";

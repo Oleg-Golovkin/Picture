@@ -1,21 +1,8 @@
-const accordion = () => {
+const moreStyles = () => {
     const btn = document.querySelector(".button-transparent"),
         row = document.querySelector("#row");
 
-    // styles2.forEach(item => {
-    //     item.classList.add("animate__animated", "animate__fadeInDown");
-    //     item.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1");
-    //     item.classList.remove("hidden-lg", "hidden-md", "hidden-sm", "hidden-xs");
-    // });
-
     btn.addEventListener("click", (e) => {
-        // styles2.forEach(item => {
-        //     item.style.display = "block";
-        //     item.classList.remove("hidden-lg", "hidden-md", "hidden-sm", "hidden-xs");
-        //     item.classList.add("col-sm-3", "col-sm-offset-0", "col-xs-10", "col-xs-offset-1");
-
-        // });
-
         // 1.3. Настраиваем механизм отправки данных на сервер
         // async - чтобы функция выполнилась после получения данных
         // с сервера.
@@ -54,9 +41,6 @@ const accordion = () => {
                 e.target.remove();
             });
     });
+}
 
-
-};
-
-
-export default accordion;
+export default moreStyles;

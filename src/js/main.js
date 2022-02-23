@@ -1,7 +1,7 @@
 import modal from "./modules/modal";
 import slider from "./modules/slider";
 import forms from "./modules/forms";
-import accordion from "./modules/accordion";
+import moreStyles from "./modules/moreStyles";
 import calculator from "./modules/calculator";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,6 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     modal();
     slider();
     forms();
-    accordion();
+    moreStyles();
     calculator();
 });
