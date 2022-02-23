@@ -9,7 +9,7 @@ const calculator = () => {
         // 1.1. Формула для подсчета. Использовал
         // только одну переменную, получающую итоговый 
         // результат  
-        let num
+        let num;
         num = (Math.round(+sizeBlock.value)) +
             (Math.round(+materialBlock.value)) +
             (Math.round(+optionsBlock.value)); //1.2. Если любой из select не задействован
@@ -26,8 +26,7 @@ const calculator = () => {
         } else {
             resultBlock.innerHTML = `${num} рублей`;
         }
-        return num
-
+        return num;
     };
     // 2. Подставляем функцию по подсчету в каждое событие 
     // в виде тела события.
@@ -40,7 +39,7 @@ const calculator = () => {
     let obj = {
         price: finish()
     };
-    return obj
+    return obj;
 
 
 };
