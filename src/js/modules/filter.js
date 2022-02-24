@@ -27,16 +27,19 @@ const filter = () => {
             blockContent = document.querySelectorAll(slectorContent);
         blockBtn.addEventListener("click", (e) => {
             // Сникаю класс активности у всех кнопок по умолчанию
-            li.forEach(li => {
-                li.classList.remove("active");
-            });
+
             // Скрываю весь контент по умолчнию
             div.forEach(li => {
                 li.style.display = "none";
+            });           
+
+            li.forEach(li => {
+                li.classList.remove("active");
             });
-        //     Показываю класс активности у нажимаемой кнопки
-        //     (поэтому для каждой кнопки совя фукнция и поэтому
-        // не стал делать через делигирование события)
+
+            //     Показываю класс активности у нажимаемой кнопки
+            //     (поэтому для каждой кнопки совя фукнция и поэтому
+            // не стал делать через делигирование события)
             e.target.classList.add("active");
             // Показываю тот блок, которых задал в функции в качестве
             // второго параметра
@@ -50,6 +53,7 @@ const filter = () => {
     choice(".portfolioMenu-menu .lovers", ".portfolio-wrapper .lovers");
     choice(".portfolioMenu-menu .guy", ".portfolio-wrapper .guy");
     choice(".portfolioMenu-menu .chef", ".portfolio-wrapper .chef");
+    choice(".portfolioMenu-menu .all", ".portfolio-wrapper .all");
 
 
 };

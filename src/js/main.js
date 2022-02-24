@@ -4,6 +4,7 @@ import moreStyles from "./modules/moreStyles";
 import calculator from "./modules/calculator";
 import postForms from "./services/postForms";
 import filter from "./modules/filter";
+import sizeBlock from "./modules/sizeBlock";
 
 document.addEventListener('DOMContentLoaded', () => {
     "use strict";
@@ -13,4 +14,5 @@ document.addEventListener('DOMContentLoaded', () => {
     calculator();
     postForms();
     filter();
+    sizeBlock();
 });
