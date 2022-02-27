@@ -6,7 +6,7 @@ const sizeBlock = () => {
         if (target && target.matches("img")) {
             let src = target.src
             target.src = src.slice(0, -4) + "-1.png"
-            const p = sizesBlock.querySelectorAll("p");
+            const p = sizesBlock.querySelectorAll('p:not(.sizes-hit)');
             p.forEach(p => {
                 p.style.display = "none";
             });
@@ -16,8 +16,8 @@ const sizeBlock = () => {
     const hideImg = (target, sizesBlock) => {
         if (target && target.matches("img")) {
             let src = target.src
-            target.src = src.slice(0, -6) + ".png"
-            const p = sizesBlock.querySelectorAll("p");
+            target.src = src.slice(0, -6) + ".png";
+            const p = sizesBlock.querySelectorAll('p:not(.sizes-hit)');
             p.forEach(p => {
                 p.style.display = "block";
             });
