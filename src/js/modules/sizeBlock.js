@@ -1,7 +1,6 @@
 const sizeBlock = () => {
     const sizesBlocks = document.querySelectorAll(".sizes-block");
 
-
     const showImg = (sizesBlock) => {
         const img = sizesBlock.querySelector("img");
         console.log(img.src);
