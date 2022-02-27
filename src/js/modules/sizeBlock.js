@@ -28,6 +28,9 @@ const sizeBlock = () => {
         sizesBlock.addEventListener("mouseover", (e) => {
             showImg(e.target, sizesBlock);
         });
+        sizesBlock.addEventListener("mouseout", (e) => {
+            hideImg(e.target, sizesBlock);
+        });
     })
     
 };

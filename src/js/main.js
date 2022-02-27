@@ -5,6 +5,7 @@ import calculator from "./modules/calculator";
 import postForms from "./services/postForms";
 import filter from "./modules/filter";
 import sizeBlock from "./modules/sizeBlock";
+import acordion from "./modules/acordion";
 
 document.addEventListener('DOMContentLoaded', () => {
     "use strict";
@@ -15,4 +16,5 @@ document.addEventListener('DOMContentLoaded', () => {
     postForms();
     filter();
     sizeBlock();
+    acordion();
 });
