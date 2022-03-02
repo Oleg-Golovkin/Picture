@@ -10,7 +10,7 @@
 </head>
 <body>
 	<img class="fixed-gift wow pulse infinite" src=assets/img/gift.png alt>
-	<header class=header>
+	<header   class=header>
 		<div class=container>
 			<div class="col-md-2 col-sm-3 col-xs-6">
 				<button class=burger>
@@ -32,9 +32,9 @@
 				</ul>
 			</div>
 			<div class="col-md-8 hidden-sm hidden-xs">
-				<ul class=header-menu>
+				<ul class=header-menu >
 					<li>
-						<a href="#">Картина из вашего фото</a>
+						<a href="#" class="animate__animated animate__fadeIn" >Картина из вашего фото</a>
 						<ul class="burger-menu header-menu-sub">
 							<li><a href=#styles>Фотомозаика</a></li>
 							<li><a href=#styles>Шарж по фото</a></li>
@@ -74,7 +74,7 @@
 			</div>
 		</div>
 	</header>
-	<main class=main>
+	<main  id="up" class=main>
 		<div class=container>
 			<div class=row>
 				<div class="col-md-3 col-sm-4 col-xs-5">
@@ -128,7 +128,7 @@
 			</div>
 		</div>
 	</main>
-	<section class=promo>
+	<section  class=promo>
 		<div class=container>
 			<div class=col-md-7>
 				<img class=promo-img src=assets/img/promo-1.png alt>
@@ -609,6 +609,11 @@
 		</div>
 	</section>
 
+	<!------------------------- Появляющася кнопка прокрутки. Место окнчания прокрутки блок с классом----------------------- -->
+    <section class="scroll-wapper">
+        <a href="#up" data-links="1" class="scroll"><img src="./assets/img/scroll.svg" alt="" class="scroll__img"></a>
+    </section>
+
 	<footer class=footer id=footer>
 		<div class=container>
 			<div class="col-md-8 hidden-sm hidden-xs">
@@ -709,6 +714,7 @@
 			</div>
 		</div>
 	</div>
+
 	<script src="js/bundle.js"></script>
 </body>
 </html>
