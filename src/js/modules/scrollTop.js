@@ -23,7 +23,7 @@ const scrollTop = () => {
     let links = document.querySelectorAll('[href^= "#"]'),
         /* [href^= "#"] все ссылки, начинающиеся на знак # */
         // Скорость прокрутки
-        speed = 0.2;
+        speed = 0.2; 
 
     links.forEach(link => {
         link.addEventListener('click', function (event) {
