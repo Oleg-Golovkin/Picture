@@ -1496,7 +1496,7 @@ h4 {
 }
 
 .scroll {
-  /* display: none; */
+  display: none;
   position: fixed;
   bottom: 40px;
   right: 20px;
