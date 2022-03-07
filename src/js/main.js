@@ -7,6 +7,7 @@ import filter from "./modules/filter";
 import sizeBlock from "./modules/sizeBlock";
 import acordion from "./modules/acordion";
 import scrollTop from "./modules/scrollTop";
+import DragAndDrop from "./modules/DragAndDrop";
 
 document.addEventListener('DOMContentLoaded', () => {
     "use strict";
@@ -19,4 +20,5 @@ document.addEventListener('DOMContentLoaded', () => {
     sizeBlock();
     acordion();
     scrollTop();
+    DragAndDrop();
 });
