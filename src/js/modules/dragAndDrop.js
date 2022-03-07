@@ -6,7 +6,7 @@ const dragAndDrop = () => {
             input.addEventListener(events, (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-            })
+            });
         });
     });
 
